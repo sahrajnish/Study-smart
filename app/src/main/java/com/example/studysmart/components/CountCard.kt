@@ -44,9 +44,3 @@ fun CountCard(
         }
     }
 }
-
-//@Preview
-//@Composable
-//private fun pre() {
-//    CountCard()
-//}

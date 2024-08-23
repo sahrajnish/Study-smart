@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -35,19 +36,106 @@ import androidx.compose.ui.unit.dp
 import com.example.studysmart.R
 import com.example.studysmart.components.CountCard
 import com.example.studysmart.components.SubjectCard
+import com.example.studysmart.components.studySessionList
 import com.example.studysmart.components.tasksList
+import com.example.studysmart.domain.model.Session
 import com.example.studysmart.domain.model.Subject
+import com.example.studysmart.domain.model.Task
 import javax.security.auth.SubjectDomainCombiner
 
 @Composable
 fun DashBoardScreen(modifier: Modifier = Modifier) {
 
     val subjects = listOf(
-        Subject(name = "English", goalHours = 10f, colors = Subject.subjectCardColors[0]),
-        Subject(name = "Maths", goalHours = 10f, colors = Subject.subjectCardColors[1]),
-        Subject(name = "Physics", goalHours = 10f, colors = Subject.subjectCardColors[2]),
-        Subject(name = "DSA", goalHours = 10f, colors = Subject.subjectCardColors[3]),
-        Subject(name = "Biology", goalHours = 10f, colors = Subject.subjectCardColors[4]),
+        Subject(name = "English", goalHours = 10f, colors = Subject.subjectCardColors[0], subjectId = 0),
+        Subject(name = "Maths", goalHours = 10f, colors = Subject.subjectCardColors[1], subjectId = 0),
+        Subject(name = "Physics", goalHours = 10f, colors = Subject.subjectCardColors[2], subjectId = 0),
+        Subject(name = "DSA", goalHours = 10f, colors = Subject.subjectCardColors[3], subjectId = 0),
+        Subject(name = "Biology", goalHours = 10f, colors = Subject.subjectCardColors[4], subjectId = 0),
+    )
+
+    val tasks = listOf(
+        Task(
+            "HomeWork",
+            "Maths Homework",
+            1L,
+            0,
+            "Maths",
+            false,
+            taskSubjectId = 0,
+            taskId = 4
+        ),
+        Task(
+            "make notes",
+            "Maths Homework",
+            1L,
+            2,
+            "Maths",
+            true,
+            taskSubjectId = 0,
+            taskId = 1
+        ),
+        Task(
+            "practice problems",
+            "Maths Homework",
+            1L,
+            3,
+            "Maths",
+            true,
+            taskSubjectId = 0,
+            taskId = 2
+        ),
+        Task(
+            "study physics",
+            "Maths Homework",
+            1L,
+            0,
+            "physics",
+            false,
+            taskSubjectId = 0,
+            taskId = 3
+        ),
+        Task(
+            "study maths",
+            "Maths Homework",
+            1L,
+            2,
+            "physics",
+            false,
+            taskSubjectId = 0,
+            taskId = 5
+        )
+    )
+
+    val sessions: List<Session> = listOf(
+        Session(
+            sessionStudyId = 0,
+            relatedToSubject = "English",
+            date = 1L,
+            duration = 2L,
+            sessionId = 1
+        ),
+        Session(
+            sessionStudyId = 1,
+            relatedToSubject = "Maths",
+            date = 1L,
+            duration = 2L,
+            sessionId = 2
+        ),
+        Session(
+            sessionStudyId = 2,
+            relatedToSubject = "Physics",
+            date = 1L,
+            duration = 2L,
+            sessionId = 2
+        ),
+        Session(
+            sessionStudyId = 3,
+            relatedToSubject = "DSA",
+            date = 1L,
+            duration = 2L,
+            sessionId = 3
+        )
     )
 
     Scaffold(
@@ -86,10 +174,25 @@ fun DashBoardScreen(modifier: Modifier = Modifier) {
             }
             tasksList(
                 sectionTitle = "UPCOMING TASKS",
-                tasks = emptyList(),
                 emptyListText = "You don't have any upcoming tasks. \n" +
-                    "Click the + button in subject screen to add task."
+                    "Click the + button in subject screen to add task.",
+                tasks = tasks,
+                onCheckBoxClick = {},
+                onTaskCardClick = {}
             )
+            item{
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+            studySessionList(
+                sectionTitle = "RECENT STUDY SESSIONS",
+                sessions = sessions,
+                emptyListText = "You don't have any recent study sessions. \n" +
+                        "Start a study session to begin recording your progress.",
+                onDeleteIconClick = {}
+            )
+            item{
+                Spacer(modifier = Modifier.height(20.dp))
+            }
         }
     }
 }
